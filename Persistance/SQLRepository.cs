@@ -11,6 +11,25 @@ namespace WPFUtility.Persistance
         /// </summary>
         private readonly SqlConnection connection = new(string.Empty);
 
+        private static SQLRepository<T> _instance;
+        public static SQLRepository<T> Instance
+        {
+            get
+            {
+                if (Instance == null)
+                {
+                    _instance = new();
+                    return _instance;
+                }
+                return _instance;
+            }
+        }
+
+        private SQLRepository()
+        {
+
+        }
+
         public T Create(string text)
         {
             CheckConnection();
@@ -55,7 +74,7 @@ namespace WPFUtility.Persistance
             throw new NotImplementedException();
         }
 
-        public void Delete(T entity)
+        public void Delete(int ID)
         {
             CheckConnection();
         }

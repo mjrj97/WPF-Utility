@@ -12,7 +12,7 @@ namespace WPFUtility.Persistance
         { 
             get
             {
-                if (Instance == null)
+                if (_instance == null)
                 {
                     _instance = new();
                     return _instance;
@@ -29,10 +29,13 @@ namespace WPFUtility.Persistance
             Load();
         }
 
-        public void Create(T obj)
+        public T Create(string text)
         {
+            T obj = new();
+            obj.Parse(text);
             List.Add(obj);
             Save();
+            return obj;
         }
 
         public T Retrieve(int ID)
@@ -61,9 +64,20 @@ namespace WPFUtility.Persistance
                 Save();
         }
 
-        public void Delete(T obj)
+        public void Delete(int ID)
         {
-            List.Remove(obj);
+            int i = 0;
+            bool found = false;
+            while (i < List.Count && !found)
+            {
+                if (List[i].ID == ID)
+                {
+                    List.RemoveAt(i);
+                    found = true;
+                }
+                else
+                    i++;
+            }
             Save();
         }
 
