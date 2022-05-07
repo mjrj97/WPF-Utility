@@ -5,9 +5,18 @@ namespace Example.ViewModels
 {
     public class PersonViewModel : ViewModel<Person>
     {
-        public PersonViewModel(Person model) : base(model)
+        public string Name
         {
-
+            get
+            {
+                return model.Name;
+            }
+            set
+            {
+                model.Name = value;
+            }
         }
+
+        public PersonViewModel(Person model) : base(model) { }
     }
 }

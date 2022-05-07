@@ -6,14 +6,19 @@ namespace Example.Models
     {
         public int ID { get; set; }
 
+        public string Name { get; set; }
+
         public string Format()
         {
-            return ID.ToString();
+            return ID.ToString() + ";" + Name;
         }
 
         public void Parse(string line)
         {
-            ID = int.Parse(line);
+            string[] parts = line.Split(';');
+
+            ID = int.Parse(parts[0]);
+            Name = parts[1];
         }
     }
 }

@@ -12,6 +12,9 @@ namespace WPFUtility.Persistance
         private readonly SqlConnection connection = new(string.Empty);
 
         private static SQLRepository<T> _instance;
+        /// <summary>
+        /// Singleton instance of the repository.
+        /// </summary>
         public static SQLRepository<T> Instance
         {
             get
@@ -69,7 +72,7 @@ namespace WPFUtility.Persistance
             return result;
         }
 
-        public void Update(T entity)
+        public void Update(int ID)
         {
             throw new NotImplementedException();
         }

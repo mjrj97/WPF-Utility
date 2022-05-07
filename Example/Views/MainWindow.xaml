@@ -40,10 +40,16 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border Background="White" BorderThickness="1" BorderBrush="Gray" Padding="5">
-                        <DockPanel>
-                            <TextBlock Text="Person ID: "/>
-                            <TextBlock Text="{Binding ID}"/>
-                        </DockPanel>
+                        <StackPanel>
+                            <DockPanel>
+                                <TextBlock Text="Name: "/>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DockPanel>
+                            <DockPanel>
+                                <TextBlock Text="ID: "/>
+                                <TextBlock Text="{Binding ID}"/>
+                            </DockPanel>
+                        </StackPanel>
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>

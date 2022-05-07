@@ -5,9 +5,15 @@ namespace WPFUtility.Persistance
 {
     public class CSVRepository<T> : IRepository<T> where T : IPersistable, new()
     {
+        /// <summary>
+        /// Cached list of the items to be persisted.
+        /// </summary>
         protected List<T> List { get; set; }
 
         private static CSVRepository<T> _instance;
+        /// <summary>
+        /// Singleton instance of the repository.
+        /// </summary>
         public static CSVRepository<T> Instance 
         { 
             get
@@ -25,7 +31,11 @@ namespace WPFUtility.Persistance
 
         private CSVRepository()
         {
+#if DEBUG
             path = "../../../" + typeof(T).Name + ".csv";
+#else
+            path = typeof(T).Name + ".csv";
+#endif
             Load();
         }
 
@@ -58,9 +68,15 @@ namespace WPFUtility.Persistance
             return List;
         }
 
-        public void Update(T obj)
+        public void Update(int ID)
         {
-            if (obj != null)
+            bool found = false;
+            foreach (T item in List)
+            {
+                if (item.ID == ID)
+                    found = true;
+            }
+            if (found)
                 Save();
         }
 

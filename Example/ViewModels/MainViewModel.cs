@@ -13,7 +13,6 @@ namespace Example.ViewModels
         public MainViewModel()
         {
             People = new();
-
             UpdateList();
         }
 
@@ -24,6 +23,12 @@ namespace Example.ViewModels
             {
                 People.Add(new PersonViewModel(person));
             }
+        }
+
+        public void AddPerson(int ID, string Name)
+        {
+            Person person = CSVRepository<Person>.Instance.Create((ID.ToString() + ";" + Name));
+            People.Add(new PersonViewModel(person));
         }
 
         public void RemovePerson()
