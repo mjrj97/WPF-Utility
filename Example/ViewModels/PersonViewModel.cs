@@ -18,6 +18,19 @@ namespace Example.ViewModels
             }
         }
 
+        public int Age
+        {
+            get
+            {
+                return model.Age;
+            }
+            set
+            {
+                model.Age = value;
+                NotifyPropertyChanged(nameof(Age));
+            }
+        }
+
         public Sex Sex
         {
             get

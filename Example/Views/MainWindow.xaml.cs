@@ -23,7 +23,7 @@ namespace Example.Views
 
             if (dialog.ShowDialog() == true)
             {
-                MVM.AddPerson(dialog.PersonName, dialog.PersonSex);
+                MVM.AddPerson(dialog.PersonName, dialog.PersonAge, dialog.PersonSex);
             }
         }
 
@@ -31,11 +31,12 @@ namespace Example.Views
         {
             PersonDialog dialog = new();
             dialog.PersonName = MVM.SelectedPerson.Name;
+            dialog.PersonAge = MVM.SelectedPerson.Age;
             dialog.PersonSex = MVM.SelectedPerson.Sex;
 
             if (dialog.ShowDialog() == true)
             {
-                MVM.EditPerson(dialog.PersonName, dialog.PersonSex);
+                MVM.EditPerson(dialog.PersonName, dialog.PersonAge, dialog.PersonSex);
             }
         }
 

@@ -46,6 +46,11 @@
                                 <TextBlock Text="{Binding Name}"/>
                             </DockPanel>
                             <DockPanel>
+                                <TextBlock Text="Age: "/>
+                                <TextBlock Text="{Binding Age}"/>
+                                <TextBlock Text=" years old"/>
+                            </DockPanel>
+                            <DockPanel>
                                 <TextBlock Text="Sex: "/>
                                 <TextBlock Text="{Binding Sex}"/>
                             </DockPanel>

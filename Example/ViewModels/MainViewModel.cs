@@ -25,15 +25,16 @@ namespace Example.ViewModels
             }
         }
 
-        public void AddPerson(string Name, Sex Sex)
+        public void AddPerson(string Name, int Age, Sex Sex)
         {
-            Person person = CSVRepository<Person>.Instance.Create(Name + ";" + (int)Sex);
+            Person person = CSVRepository<Person>.Instance.Create(Name + CSVRepository<Person>.Separator + Age.ToString() + CSVRepository<Person>.Separator + (int)Sex);
             People.Add(new PersonViewModel(person));
         }
 
-        public void EditPerson(string Name, Sex Sex)
+        public void EditPerson(string Name, int Age, Sex Sex)
         {
             SelectedPerson.Name = Name;
+            SelectedPerson.Age = Age;
             SelectedPerson.Sex = Sex;
             CSVRepository<Person>.Instance.Update(SelectedPerson.ID);
         }

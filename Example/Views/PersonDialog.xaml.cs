@@ -1,6 +1,7 @@
 ﻿using Example.Models;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Example.Views
 {
@@ -20,6 +21,20 @@ namespace Example.Views
             {
                 _personName = value;
                 NotifyPropertyChanged(nameof(PersonName));
+            }
+        }
+
+        private int _personAge;
+        public int PersonAge
+        {
+            get
+            {
+                return _personAge;
+            }
+            set
+            {
+                _personAge = value;
+                NotifyPropertyChanged(nameof(PersonAge));
             }
         }
 
@@ -54,6 +69,22 @@ namespace Example.Views
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
+        }
+
+        /// <summary>
+        /// Ensures that the textbox can only contain numbers.
+        /// </summary>
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            bool FoundText = true;
+            int i = 0;
+            while (i  < e.Text.Length && FoundText)
+            {
+                FoundText = !char.IsDigit(e.Text[i]);
+                i++;
+            }
+
+            e.Handled = FoundText;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

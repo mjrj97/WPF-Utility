@@ -18,6 +18,10 @@
             <TextBox Text="{Binding PersonName}" Width="110" Height="25" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
         </DockPanel>
         <DockPanel Margin="0 0 0 10">
+            <TextBlock Text="Age" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding PersonAge}" PreviewTextInput="NumberValidationTextBox" Width="110" Height="25" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
+        </DockPanel>
+        <DockPanel Margin="0 0 0 10">
             <TextBlock Text="Sex" VerticalAlignment="Center"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource sexEnum}}" SelectedItem="{Binding PersonSex}" Width="110" Height="25" HorizontalAlignment="Right"/>
         </DockPanel>
