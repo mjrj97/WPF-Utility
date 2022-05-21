@@ -14,6 +14,20 @@ namespace Example.ViewModels
             set
             {
                 model.Name = value;
+                NotifyPropertyChanged(nameof(Name));
+            }
+        }
+
+        public Sex Sex
+        {
+            get
+            {
+                return model.Sex;
+            }
+            set
+            {
+                model.Sex = value;
+                NotifyPropertyChanged(nameof(Sex));
             }
         }
 

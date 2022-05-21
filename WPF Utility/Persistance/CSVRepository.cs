@@ -29,6 +29,8 @@ namespace WPFUtility.Persistance
 
         private readonly string path;
 
+        public const char Separator = ';';
+
         private CSVRepository()
         {
 #if DEBUG
@@ -42,7 +44,8 @@ namespace WPFUtility.Persistance
         public T Create(string text)
         {
             T obj = new();
-            obj.Parse(text);
+            obj.ID = List[^1].ID + 1;
+            obj.Parse(obj.ID + Separator.ToString() + text);
             List.Add(obj);
             Save();
             return obj;
@@ -108,6 +111,7 @@ namespace WPFUtility.Persistance
             while ((line = reader.ReadLine()) != null)
             {
                 T p = new();
+                p.ID = int.Parse(line.Split(Separator)[0]);
                 p.Parse(line);
                 List.Add(p);
             }

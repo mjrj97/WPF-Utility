@@ -8,17 +8,19 @@ namespace Example.Models
 
         public string Name { get; set; }
 
+        public Sex Sex { get; set; }
+
         public string Format()
         {
-            return ID.ToString() + ";" + Name;
+            return ID.ToString() + CSVRepository<Person>.Separator + Name + CSVRepository<Person>.Separator + (int)Sex;
         }
 
         public void Parse(string line)
         {
-            string[] parts = line.Split(';');
+            string[] parts = line.Split(CSVRepository<Person>.Separator);
 
-            ID = int.Parse(parts[0]);
             Name = parts[1];
+            Sex = (Sex)int.Parse(parts[2]);
         }
     }
 }

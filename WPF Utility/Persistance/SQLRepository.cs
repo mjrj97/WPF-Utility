@@ -9,7 +9,7 @@ namespace WPFUtility.Persistance
         /// <summary>
         /// The connection to the SQL Database.
         /// </summary>
-        private readonly SqlConnection connection = new(string.Empty);
+        private readonly string connectionString = string.Empty;
 
         private static SQLRepository<T> _instance;
         /// <summary>
@@ -19,7 +19,7 @@ namespace WPFUtility.Persistance
         {
             get
             {
-                if (Instance == null)
+                if (_instance == null)
                 {
                     _instance = new();
                     return _instance;
@@ -30,7 +30,10 @@ namespace WPFUtility.Persistance
 
         private SQLRepository()
         {
-
+            if (!TableExist())
+            {
+                CreateTable();
+            }
         }
 
         public T Create(string text)
@@ -39,6 +42,8 @@ namespace WPFUtility.Persistance
 
             T obj = new();
             obj.Parse(text);
+
+
             return obj;
         }
 
@@ -52,24 +57,22 @@ namespace WPFUtility.Persistance
         public List<T> RetrieveAll()
         {
             CheckConnection();
+            List<T> list = new();
 
-            List<T> result = new();
-            
-            connection.Open();
-            SqlCommand command = new("", connection);
-
-            command.Parameters.Add(new SqlParameter("fn", ""));
-
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlConnection connection = new(connectionString))
             {
-                while (reader.Read())
+                connection.Open();
+                string query = $"SELECT * FROM {nameof(T)}";
+                SqlCommand sQLCommand = new(query, connection);
+
+                using SqlDataReader sqldatareader = sQLCommand.ExecuteReader();
+                while (sqldatareader.Read() != false)
                 {
-                    //result.Add(reader.GetString(0));
+
                 }
             }
-            connection.Close();
 
-            return result;
+            return list;
         }
 
         public void Update(int ID)
@@ -82,10 +85,36 @@ namespace WPFUtility.Persistance
             CheckConnection();
         }
 
+        private void CreateTable()
+        {
+            using SqlConnection connection = new(connectionString);
+            connection.Open();
+            string query = $"CREATE TABLE [{typeof(T).Name}] (\n  [id] tinyint IDENTITY(1, 1) , \n PRIMARY KEY([id])\n) ON[PRIMARY]\nGO\n";
+            System.Diagnostics.Debug.WriteLine(query);
+            SqlCommand sQLCommand = new(query, connection);
+            sQLCommand.ExecuteNonQuery();
+        }
+
         private void CheckConnection()
         {
-            if (connection.ConnectionString == string.Empty)
+            if (connectionString == string.Empty)
                 throw new NotImplementedException("Connection string is not yet defined. Check line 12 in SQLRepository.");
+        }
+
+        private bool TableExist()
+        {
+            bool exists = false;
+
+            using (SqlConnection connection = new(connectionString))
+            {
+                connection.Open();
+                string query = "select case when exists((select * from information_schema.tables where table_name = '" + typeof(T).Name + "')) then 1 else 0 end";
+                SqlCommand sQLCommand = new(query, connection);
+                int result = (int)sQLCommand.ExecuteScalar();
+                exists = result == 1;
+            }
+
+            return exists;
         }
     }
 }
